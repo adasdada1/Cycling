@@ -18,23 +18,102 @@ const headerList = document.querySelector(".header__list");
 burger.addEventListener("click", function () {
   burger.classList.toggle("active");
   headerList.classList.toggle("left");
-});
-
-//! GSAP
-document.querySelectorAll(".header__item").forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    gsap.to(window, {duration: 1, scrollTo:{y:"#section" + (index + 1), offsetY:100}});
+  document.addEventListener("click", function (e) {
+    if (e.target !== headerList && e.target !== burger)
+      headerList.classList.remove("left");
   });
 });
 
+const button = document.querySelectorAll(".start__button");
+const popupBg = document.querySelector(".popup-register");
+const popup = document.querySelector(".popup-register__form");
+const popupClose = document.querySelector(".popup-register__close");
+const header = document.querySelector(".header");
+const main = document.querySelector(".main");
+const footer = document.querySelector(".footer");
+let successAlert = document.createElement("div");
+button.forEach((element) => {
+  element.addEventListener("click", function (e) {
+    e.preventDefault(); // Предотвращаем дефолтное поведение браузера
+    popupBg.classList.add("activated"); // Добавляем класс 'active' для фона
+    popup.classList.add("activated"); // И для самого окна
+    header.classList.add("dark");
+    main.classList.add("dark");
+    footer.classList.add("dark");
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target === popupBg || e.target === popupClose) {
+    document.querySelector(".popup-register__success").classList.add("hidden");
+    Array.from(
+      document.querySelector(".popup-register__wrapper").children
+    ).forEach((element) => {
+      element.classList.remove("hidden");
+    });
+
+    popupBg.classList.remove("activated");
+    popup.classList.remove("activated");
+    header.classList.remove("dark");
+    main.classList.remove("dark");
+    footer.classList.remove("dark");
+
+    popup.name.value = "";
+    popup.phone.value = "";
+  }
+});
+
+const formNamePlaceholder = popup.name.placeholder;
+const formPhonePlaceholder = popup.phone.placeholder;
+
+popup.name.addEventListener("focus", function (e) {
+  popup.name.placeholder = "";
+});
+popup.name.addEventListener("blur", function (e) {
+  popup.name.placeholder = formNamePlaceholder;
+});
+
+popup.phone.addEventListener("focus", function (e) {
+  popup.phone.placeholder = "";
+});
+popup.phone.addEventListener("blur", function (e) {
+  popup.phone.placeholder = formPhonePlaceholder;
+});
+
+popup.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (validatePhoneNumber(popup.phone.value)) {
+    successAlert.classList.add("success");
+    successAlert.textContent = "Application successfully sent";
+    Array.from(
+      document.querySelector(".popup-register__wrapper").children
+    ).forEach((element) => {
+      element.classList.add("hidden");
+    });
+    document
+      .querySelector(".popup-register__success")
+      .classList.remove("hidden");
+  }
+});
+
+function validatePhoneNumber(input) {
+  const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+  return regex.test(input);
+}
+
+//! GSAP
+
+document.querySelectorAll(".header__item").forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: { y: "#section" + (index + 1), offsetY: 100 },
+    });
+  });
+});
 
 gsap.to(
-  [
-    ".start__title",
-    ".start__subtitle",
-    ".start__description",
-    ".start__button",
-  ],
+  [".start__title", ".start__subtitle", ".start__description", ".main_button"],
   {
     delay: 0.5,
     x: 0,
@@ -122,6 +201,19 @@ galleryLink.forEach((block) => {
       });
     },
   });
+});
+
+gsap.to(".last_button", {
+  scrollTrigger: {
+    trigger: ".last__button_wrapper",
+    start: "top 80%",
+    end: "top 30%",
+
+    toggleActions: "play none none none",
+  },
+  y: 0,
+  duration: 1,
+  opacity: 1,
 });
 
 // console.clear();

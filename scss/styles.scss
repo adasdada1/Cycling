@@ -2,9 +2,11 @@
   font-family: 'SportsWorld';
   src: url('../font/SportsWorld.woff2') format(woff2);
 }
-html{
-  --width:0%;
+
+html {
+  --width: 0%;
 }
+
 * {
   font-family: 'SportsWorld';
   font-weight: normal;
@@ -13,8 +15,15 @@ html{
 
 body {
   position: relative;
+  text-transform: capitalize;
+  overflow-x: hidden;
 }
 
+header.dark,
+main.dark,
+footer.dark {
+  filter: brightness(0.4);
+}
 
 
 .container {
@@ -34,10 +43,11 @@ body {
   position: fixed;
   top: 0;
   background-color: black;
-  padding: 5px 0;
   z-index: 2;
   min-height: 35px;
   transition: all 0.5s 0s ease-out;
+  display: flex;
+  align-items: center;
 
   &__list {
     display: flex;
@@ -226,6 +236,10 @@ body {
   margin-bottom: 50px;
 }
 
+.last_button {
+  transform: translate(0, 50px);
+}
+
 .start-flex {
   display: flex;
   justify-content: right;
@@ -239,6 +253,7 @@ body {
   position: relative;
   transform: translateY(200px);
   opacity: 0;
+
   &::before {
     content: "";
     position: absolute;
@@ -249,12 +264,13 @@ body {
     left: 50%;
     transform: translateX(-50%);
   }
+
   &_wrapper {
     text-align: center;
     margin-bottom: 20px;
   }
 
- 
+
 }
 
 
@@ -293,17 +309,18 @@ body {
     // .about__item_title
     margin: 0 20px;
 
-    &:first-child{
+    &:first-child {
       transform: translateX(-500px);
       opacity: 0;
     }
-    &:last-child{
+
+    &:last-child {
       transform: translateX(500px);
       opacity: 0;
     }
 
     &_title {
-      text-transform: capitalize;
+
       color: red;
       font-size: clamp(25px, 3vw, 33px);
       line-height: 1.1;
@@ -340,6 +357,7 @@ body {
     flex: 1 1 30%;
     transform: translateY(200px);
     opacity: 0;
+
     &__quest {
       display: flex;
       align-items: center;
@@ -403,6 +421,18 @@ body {
   }
 }
 
+.button__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .start__button {
+    font-size: clamp(30px, 4vw, 40px);
+    padding: 7px 30px;
+  }
+}
+
 .gallery {
 
   // .gallery__grid
@@ -416,22 +446,12 @@ body {
 
   // .gallery_img
 
-  &_link{
+  &_link {
     transform: translatey(50px);
     opacity: 0;
   }
 
-  .button__wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    .start__button {
-      font-size: clamp(30px, 4vw, 40px);
-      padding: 7px 30px;
-    }
-  }
 
   margin-bottom: 50px;
 
@@ -474,7 +494,7 @@ body {
       font-size: clamp(14px, 2.69vw, 18px);
 
       a {
-        
+
         &:hover {
           color: rgb(255, 0, 0);
           transition: all 0.1s 0s ease-in;
@@ -541,4 +561,134 @@ body {
   100% {
     transform: rotate(0);
   }
+}
+
+.popup-register.activated {
+  opacity: 1; // Показываем фон и попап
+  pointer-events: all; // Возвращаем события
+  transition: 0.5s all;
+}
+
+.popup-register__form.activated {
+  transform: translate(-50%, -50%) scale(1); // Так же центрируем и плавно увеличиваем
+  transition: 0.5s all;
+}
+
+.popup-register {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s all;
+  z-index: 10;
+  // .popup-register__title
+
+  &__title {
+    font-size: clamp(30px, 4vw, 40px);
+    color: white;
+    background-color: red;
+    text-align: center;
+    padding: 7px 0;
+  }
+
+  &__wrapper {
+    padding: 40px 40px 20px;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.4s 0s ease-in;
+  }
+
+  // .popup-register__form
+
+  &__form {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.36);
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0); // Центрируем и масштабируем в 0 само окно
+    background: #fff;
+    width: 400px;
+    transition: 0.5s all;
+  }
+
+  // .popup-register__item
+
+  &__item {
+    position: relative;
+  }
+
+  // .popup-register__label
+
+  &__label {
+    position: absolute;
+    top: -20px;
+    font-size: clamp(16px, 4vw, 20px);
+  }
+
+  // .popup-register__input
+
+  &__input {
+    font-size: clamp(21px, 4vw, 25px);
+    border: none;
+    border-bottom: 3px solid rgb(141, 141, 141);
+    outline: none;
+    width: 100%;
+
+    &:focus {
+      border-bottom: 3px solid rgb(255, 0, 0);
+    }
+  }
+
+  &__button {
+    text-align: center;
+    background-color: #ff0000;
+    font-size: clamp(20px, 4vw, 30px);
+    padding: 10px 35px;
+    clip-path: polygon(0 0, 90% 0, 100% 55%, 100% 100%, 10% 100%, 0 55%);
+    display: inline-block;
+    transition: background-color 0.1s 0s ease-in;
+    border: 0;
+    outline: 0;
+
+  
+      color: white;
+    
+      padding: 10px 70px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(255, 60, 60);
+      transition: background-color 0.1s 0s ease-in;
+    }
+  }
+
+  &__close {
+    font-size: 30px;
+    font-weight: 900;
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    color: white;
+    cursor: pointer;
+  }
+  &__success{
+    color: black;
+    font-size: clamp(20px, 4vw, 35px);
+    position: absolute;
+    bottom: 45%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
