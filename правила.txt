@@ -1,6 +1,0 @@
-ПУТЬ К CSS: <link rel="stylesheet" href="css/reset.css">
-ПУТЬ К JS: <script src="js/script.js"></script>
-ПУТЬ К IMG ЧЕРЕЗ HTML: <img src="img/bgc.png" alt="">
-ПУТЬ К BACKROUND IMG ЧЕРЕЗ CSS: background-image: url('../img/bgc.png');
-ПУТЬ К BACKGROUND IMG ЧЕРЕЗ HTML: background-image: url(img/japannails.png); (ДЛЯ ГИТХАБА)
-CLAMP: font-size: clamp(12px, 1.69vw, 16px); означает, что размер шрифта будет изменяться вместе с размером окна просмотра (vw), но не будет меньше 12px и больше 16px
